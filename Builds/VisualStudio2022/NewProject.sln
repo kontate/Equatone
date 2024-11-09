@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio Version 17
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewProject - Standalone Plugin", "NewProject_StandalonePlugin.vcxproj", "{DDB70E8C-1230-9510-5866-0008F83CD94A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7} = {A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewProject - VST3", "NewProject_VST3.vcxproj", "{7397AF23-76D0-1C15-503C-DBFFCEE652E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7} = {A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NewProject - Shared Code", "NewProject_SharedCode.vcxproj", "{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7397AF23-76D0-1C15-503C-DBFFCEE652E3}.Debug|x64.ActiveCfg = Debug|x64
+		{7397AF23-76D0-1C15-503C-DBFFCEE652E3}.Debug|x64.Build.0 = Debug|x64
+		{7397AF23-76D0-1C15-503C-DBFFCEE652E3}.Release|x64.ActiveCfg = Release|x64
+		{7397AF23-76D0-1C15-503C-DBFFCEE652E3}.Release|x64.Build.0 = Release|x64
+		{DDB70E8C-1230-9510-5866-0008F83CD94A}.Debug|x64.ActiveCfg = Debug|x64
+		{DDB70E8C-1230-9510-5866-0008F83CD94A}.Debug|x64.Build.0 = Debug|x64
+		{DDB70E8C-1230-9510-5866-0008F83CD94A}.Release|x64.ActiveCfg = Release|x64
+		{DDB70E8C-1230-9510-5866-0008F83CD94A}.Release|x64.Build.0 = Release|x64
+		{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}.Debug|x64.ActiveCfg = Debug|x64
+		{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}.Debug|x64.Build.0 = Debug|x64
+		{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}.Release|x64.ActiveCfg = Release|x64
+		{A4F30FD3-3F76-0686-B3CA-2432EE8B26C7}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
