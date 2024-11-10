@@ -40,7 +40,7 @@ class MainComponent  : public juce::Component,
 {
 public:
     //==============================================================================
-    MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorValueTreeState& vts);
+    MainComponent (EquatoneAudioProcessor& p, juce::AudioProcessorValueTreeState& vts);
     ~MainComponent() override;
 
     //==============================================================================
@@ -56,7 +56,7 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    NewProjectAudioProcessor& processor;
+    EquatoneAudioProcessor& processor;
     juce::AudioProcessorValueTreeState& valueTreeState;
     //[/UserVariables]
 
@@ -72,6 +72,7 @@ private:
     std::unique_ptr<juce::Slider> paramA4;
     std::unique_ptr<juce::Label> paramLabel4;
     std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> consoleLabel;
 
 
     //==============================================================================

@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (EquatoneAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
     : AudioProcessorEditor (&p), audioProcessor (p), mainComponent(p,vts)
 {
     // Make sure that before the constructor has finished, you've set the

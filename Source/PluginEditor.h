@@ -18,7 +18,7 @@
 class NewProjectAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    NewProjectAudioProcessorEditor (NewProjectAudioProcessor&,juce::AudioProcessorValueTreeState&);
+    NewProjectAudioProcessorEditor (EquatoneAudioProcessor&,juce::AudioProcessorValueTreeState&);
     ~NewProjectAudioProcessorEditor() override;
 
     //==============================================================================
@@ -28,7 +28,7 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    NewProjectAudioProcessor& audioProcessor;
+    EquatoneAudioProcessor& audioProcessor;
 
     MainComponent mainComponent;
 

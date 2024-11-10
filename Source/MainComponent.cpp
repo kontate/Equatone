@@ -27,7 +27,7 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-MainComponent::MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+MainComponent::MainComponent (EquatoneAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
     : processor(p), valueTreeState(vts)
 {
     //[Constructor_pre] You can add your own custom stuff here..
@@ -35,13 +35,13 @@ MainComponent::MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorV
 
     codeText.reset (new juce::TextEditor ("new text editor"));
     addAndMakeVisible (codeText.get());
-    codeText->setMultiLine (false);
-    codeText->setReturnKeyStartsNewLine (false);
+    codeText->setMultiLine (true);
+    codeText->setReturnKeyStartsNewLine (true);
     codeText->setReadOnly (false);
     codeText->setScrollbarsShown (true);
     codeText->setCaretVisible (true);
     codeText->setPopupMenuEnabled (true);
-    codeText->setText (juce::String());
+    codeText->setText (TRANS("sin(index*440*100 *(sin(index * paramA / SampleRate)/2+0.5)/SampleRate)*paramB"));
 
     codeText->setBounds (16, 144, 560, 96);
 
@@ -120,7 +120,7 @@ MainComponent::MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorV
     paramA4->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
     paramA4->addListener (this);
 
-    paramA4->setBounds (280, 32, 78, 104);
+    paramA4->setBounds (280, 33, 78, 104);
 
     paramLabel4.reset (new juce::Label ("new label",
                                         TRANS("paramD")));
@@ -131,7 +131,7 @@ MainComponent::MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorV
     paramLabel4->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     paramLabel4->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    paramLabel4->setBounds (280, 16, 80, 24);
+    paramLabel4->setBounds (280, 17, 80, 24);
 
     juce__label.reset (new juce::Label ("new label",
                                         TRANS("usable parameter\n"
@@ -140,7 +140,8 @@ MainComponent::MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorV
                                         "- input     : input val\n"
                                         "\n"
                                         "const\n"
-                                        "- SampleRate")));
+                                        "- SampleRate\n"
+                                        "- pi")));
     addAndMakeVisible (juce__label.get());
     juce__label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     juce__label->setJustificationType (juce::Justification::centredLeft);
@@ -148,7 +149,18 @@ MainComponent::MainComponent (NewProjectAudioProcessor& p, juce::AudioProcessorV
     juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    juce__label->setBounds (16, 272, 560, 112);
+    juce__label->setBounds (16, 256, 176, 136);
+
+    consoleLabel.reset (new juce::Label ("new label",
+                                         juce::String()));
+    addAndMakeVisible (consoleLabel.get());
+    consoleLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    consoleLabel->setJustificationType (juce::Justification::centredLeft);
+    consoleLabel->setEditable (false, false, false);
+    consoleLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    consoleLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    consoleLabel->setBounds (424, 280, 150, 24);
 
 
     //[UserPreSize]
@@ -177,6 +189,7 @@ MainComponent::~MainComponent()
     paramA4 = nullptr;
     paramLabel4 = nullptr;
     juce__label = nullptr;
+    consoleLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -213,7 +226,7 @@ void MainComponent::buttonClicked (juce::Button* buttonThatWasClicked)
     {
         //[UserButtonCode_compileButton] -- add your button handler code here..
 
-        DBG(processor.setEquation(codeText->getText()));
+        consoleLabel->setText(processor.setEquation(codeText->getText()),juce::NotificationType::dontSendNotification);
         //[/UserButtonCode_compileButton]
     }
 
@@ -275,14 +288,14 @@ void MainComponent::sliderValueChanged (juce::Slider* sliderThatWasMoved)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="MainComponent" componentName=""
-                 parentClasses="public juce::Component" constructorParams="NewProjectAudioProcessor&amp; p, juce::AudioProcessorValueTreeState&amp; vts"
+                 parentClasses="public juce::Component" constructorParams="EquatoneAudioProcessor&amp; p, juce::AudioProcessorValueTreeState&amp; vts"
                  variableInitialisers="processor(p), valueTreeState(vts)" snapPixels="8"
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="1"
                  initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
   <TEXTEDITOR name="new text editor" id="ac603856a93f6bbe" memberName="codeText"
-              virtualName="" explicitFocusOrder="0" pos="16 144 560 96" initialText=""
-              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
+              virtualName="" explicitFocusOrder="0" pos="16 144 560 96" initialText="sin(index*440*100 *(sin(index * paramA / SampleRate)/2+0.5)/SampleRate)*paramB"
+              multiline="1" retKeyStartsLine="1" readonly="0" scrollbars="1"
               caret="1" popupmenu="1"/>
   <TEXTBUTTON name="compile" id="29a7d554c2f1286a" memberName="compileButton"
               virtualName="" explicitFocusOrder="0" pos="424 248 150 24" tooltip="Compile"
@@ -318,21 +331,26 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <SLIDER name="param" id="4e32089604ac79a2" memberName="paramA4" virtualName=""
-          explicitFocusOrder="0" pos="280 32 78 104" min="0.0" max="1.0"
+          explicitFocusOrder="0" pos="280 33 78 104" min="0.0" max="1.0"
           int="0.0" style="RotaryHorizontalVerticalDrag" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
   <LABEL name="new label" id="2155b307d24d17bf" memberName="paramLabel4"
-         virtualName="" explicitFocusOrder="0" pos="280 16 80 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="280 17 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="paramD" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="bd985a20c5883803" memberName="juce__label"
-         virtualName="" explicitFocusOrder="0" pos="16 272 560 112" edTextCol="ff000000"
-         edBkgCol="0" labelText="usable parameter&#10;- channel : 0 or 1&#10;- index    : 0 to inf&#10;- input     : input val&#10;&#10;const&#10;- SampleRate"
+         virtualName="" explicitFocusOrder="0" pos="16 256 176 136" edTextCol="ff000000"
+         edBkgCol="0" labelText="usable parameter&#10;- channel : 0 or 1&#10;- index    : 0 to inf&#10;- input     : input val&#10;&#10;const&#10;- SampleRate&#10;- pi"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
          italic="0" justification="33"/>
+  <LABEL name="new label" id="20a12822640fa2a4" memberName="consoleLabel"
+         virtualName="" explicitFocusOrder="0" pos="424 280 150 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
