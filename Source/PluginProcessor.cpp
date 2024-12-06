@@ -29,6 +29,8 @@ EquatoneAudioProcessor::EquatoneAudioProcessor()
         })
     
 {
+
+    
 }
 
 EquatoneAudioProcessor::~EquatoneAudioProcessor()
@@ -101,6 +103,11 @@ void EquatoneAudioProcessor::changeProgramName (int index, const juce::String& n
 void EquatoneAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
+    if (!expression.num_symbol_tables()) {
+        DBG("expression inited!");
+        setEquation("0");
+    }
+
     // initialisation that you need..
 }
 
@@ -242,7 +249,8 @@ juce::String EquatoneAudioProcessor::setEquation(juce::String str) {
     symbolTable.add_pi();
     symbolTable.add_constant("SampleRate", getSampleRate());
     
-
+    expression.release();
+    
     expression.register_symbol_table(symbolTable);
 
     exprtk::parser<float> parser;
